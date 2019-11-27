@@ -1,0 +1,146 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<meta charset="UTF-8">
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Movie Searching System</title>
+		<link href="css/style.css" rel='stylesheet' type='text/css' />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+		</script>
+		<!----webfonts---->
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+		<!----//webfonts---->
+		<!-- Global CSS for the page and tiles -->
+  		<link rel="stylesheet" href="css/main.css">
+  		<!-- //Global CSS for the page and tiles -->
+		<!---start-click-drop-down-menu----->
+		<script src="js/jquery.min.js"></script>
+        <!----start-dropdown--->
+         <script type="text/javascript">
+			var $ = jQuery.noConflict();
+				$(function() {
+					$('#activator').click(function(){
+						$('#box').animate({'top':'0px'},500);
+					});
+					$('#boxclose').click(function(){
+					$('#box').animate({'top':'-700px'},500);
+					});
+				});
+				$(document).ready(function(){
+				//Hide (Collapse) the toggle containers on load
+				$(".toggle_container").hide(); 
+				//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+				$(".trigger").click(function(){
+					$(this).toggleClass("active").next().slideToggle("slow");
+						return false; //Prevent the browser jump to the link anchor
+				});
+									
+			});
+		</script>
+        <!----//End-dropdown--->
+	</head>
+	<body>
+		<!---start-wrap---->
+			<!---start-header---->
+			<div class="header">
+				<div class="wrap">
+				<div class="logo">
+					<a href="index.html"><img src="logo.jpg" width="70dp" title="logo" /></a>
+				</div>
+				<div class="top-searchbar">
+					<form method="post" action="search.html">
+						<div class="icon"><span class="searchbar_icon"></span></div>
+                		<select name="searchbar_choose" id="" class="searchbar_choose">
+                  			<option value="total">통합검색</option>
+                    		<option value="movie">영화검색</option>
+                    		<option value="person">영화인검색</option>
+                    		<option value="festival">영화제검색</option>
+                    		<option value="company">영화사검색</option>
+                  		</select>
+                		<input name="searchbar_text" type="text" class="searchbar_text" placeholder="검색어를 입력하세요">
+                		<input type="submit" value="">
+            		</form>
+				</div>
+				<div class="menu">
+					<div class="mmenu">
+						<ul>
+							<li><a href="mypage.html"><span>마이페이지</span></a></li>
+							<li><a href="mylist.html"><span>관심목록</span></a></li>
+							<li><a href="logout.html"><span>로그아웃</span></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clear"> </div>
+			</div>
+		</div>
+		<!---//End-header---->
+		<!---start-content---->
+		<div class="content">
+			<div class="wrap">
+			<div class="single-page">
+							<div class="single-page-artical">
+								<div class="artical-content">
+									<?php
+	$dbname="dbtest";
+	$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
+	mysqli_select_db($conn,$dbname);
+	$title=$_GET['title'];
+	$sql="SELECT * FROM movie WHERE title='$title'";
+	$result_set=mysqli_query($conn,$sql);
+	while($result=mysqli_fetch_array($result_set)){
+		echo '<img src="'.$result['poster_url'].'" title="banner1">
+									<h3><a href="#">'.$result['title'].'</a></h3>
+									<p>'.$result['release_year'].'년에 개봉한 영화입니다</p> 
+								    </div>';
+	}
+	mysqli_close($conn);
+?>
+		  						 <div class="clear"> </div>
+							</div>
+							<!---start-comments-section--->
+							<div class="comment-section">
+				<div class="grids_of_2">
+					<h2>출연정보</h2>
+					<div class="grid1_of_2">
+						<div class="grid_img">
+							<a href=""><img src="images/pic10.jpg" alt=""></a>
+						</div>
+						<div class="grid_text">
+							<h4 class="style1 list"><a href="#">Uku Mason</a></h4>
+							<h3 class="style">march 2, 2013 - 12.50 AM</h3>
+							<p class="para top"> All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="grid1_of_2">
+						<div class="grid_img">
+							<a href=""><img src="images/pic12.jpg" alt=""></a>
+						</div>
+						<div class="grid_text">
+							<h4 class="style1 list"><a href="#">Ro Kanth</a></h4>
+							<h3 class="style">march 2, 2013 - 12.50 AM</h3>
+							<p class="para top"> All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
+						</div>
+						<div class="clear"></div>
+					</div>		
+					</div>
+			</div>
+							<!---//End-comments-section--->
+						</div>
+						 </div>
+		</div>
+		<!----start-footer--->
+		<div class="footer">
+			<p>DB Project : 영화는 조조</p>
+		</div>
+		<!----//End-footer--->
+		<!---//End-wrap---->
+	</body>
+</html>
+

@@ -1,0 +1,75 @@
+<meta charset="UTF-8">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Movie Searching System</title>
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <!----webfonts---->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!----//webfonts---->
+    <!-- Global CSS for the page and tiles -->
+      <link rel="stylesheet" href="css/main.css">
+      <!-- //Global CSS for the page and tiles -->
+    <!---start-click-drop-down-menu----->
+    <script src="js/jquery.min.js"></script>
+        <!----start-dropdown--->
+         <script type="text/javascript">
+      var $ = jQuery.noConflict();
+        $(function() {
+          $('#activator').click(function(){
+            $('#box').animate({'top':'0px'},500);
+          });
+          $('#boxclose').click(function(){
+          $('#box').animate({'top':'-700px'},500);
+          });
+        });
+        $(document).ready(function(){
+        //Hide (Collapse) the toggle containers on load
+        $(".toggle_container").hide(); 
+        //Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+        $(".trigger").click(function(){
+          $(this).toggleClass("active").next().slideToggle("slow");
+            return false; //Prevent the browser jump to the link anchor
+        });
+                  
+      });
+    </script>
+        <!----//End-dropdown--->
+    <!---//End-click-drop-down-menu----->
+  </head>
+  <body>
+  <!---start-wrap---->
+      <!---start-header---->
+      <div class="header">
+        <div class="wrap">
+        <div class="logo">
+          <a href="login.html"><img src="logo.jpg" width="70dp" title="logo" /></a>
+        </div>
+        <div class="clear"> </div>
+      </div>
+    </div>
+    <!---//End-header---->
+    <!---start-content---->
+    <div class="content">
+      <div class="wrap">
+        <div id="main" role="main">
+          <div>
+            <?php
+    include("session.php");
+    echo "<h1>".$_SESSION['id']."님 마이페이지</h1>";
+    ?>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---//End-content---->
+    <!----start-footer--->
+    <div class="footer">
+      <p>DB Project : 영화는 조조</a></p>
+    </div>
+    <!----//End-footer--->
+  </body>
+</html>

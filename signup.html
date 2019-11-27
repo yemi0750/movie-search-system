@@ -1,0 +1,94 @@
+<meta charset="UTF-8">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Movie Searching System</title>
+    <link href="css/style.css" rel='stylesheet' type='text/css' />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+    </script>
+    <!----webfonts---->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <!----//webfonts---->
+    <!-- Global CSS for the page and tiles -->
+      <link rel="stylesheet" href="css/main.css">
+      <!-- //Global CSS for the page and tiles -->
+    <!---start-click-drop-down-menu----->
+    <script src="js/jquery.min.js"></script>
+        <!----start-dropdown--->
+         <script type="text/javascript">
+      var $ = jQuery.noConflict();
+        $(function() {
+          $('#activator').click(function(){
+            $('#box').animate({'top':'0px'},500);
+          });
+          $('#boxclose').click(function(){
+          $('#box').animate({'top':'-700px'},500);
+          });
+        });
+        $(document).ready(function(){
+        //Hide (Collapse) the toggle containers on load
+        $(".toggle_container").hide(); 
+        //Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+        $(".trigger").click(function(){
+          $(this).toggleClass("active").next().slideToggle("slow");
+            return false; //Prevent the browser jump to the link anchor
+        });
+                  
+      });
+    </script>
+        <!----//End-dropdown--->
+    <!---//End-click-drop-down-menu----->
+  </head>
+  <body>
+  <!---start-wrap---->
+      <!---start-header---->
+      <div class="header">
+        <div class="login_wrap">
+        <div class="login_logo">
+          <a href="login.html"><img src="logo.jpg" title="logo" /></a>
+        </div>
+        <div class="clear"> </div>
+      </div>
+    </div>
+    <!---//End-header---->
+    <!---start-content---->
+    <div class="content">
+      <div class="wrap">
+        <div id="login_main" role="main">
+          <div id="loginForm">
+            <form method="post" action="signup_check.html">
+              <div class="id">
+                <input type="text" class="login_id" name="id" placeholder="아이디" required/>
+              </div>
+              <div class="pw">
+                <input type="text" class="login_pw" name="pw" placeholder="비밀번호" required/>
+              </div>
+              <div class="pwc">
+                <input type="text" class="login_pwc" name="pwc" placeholder="비밀번호 재입력" required/>
+              </div>
+              <div class="name">
+                <input type="text" class="login_name" name="name" placeholder="이름" required/>
+              </div>
+              <div class="nickname">
+                <input type="text" class="login_nm" name="nickname" placeholder="닉네임" required/>
+              </div>
+              <div class="email">
+                <input type="text" class="login_email" name="email" placeholder="이메일" required/>
+              </div>
+              <div class="submit">
+                <button class="login_button" type="submit"> 회원가입 </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!---//End-content---->
+    <!----start-footer--->
+    <div class="footer">
+      <p>DB Project : 영화는 조조</a></p>
+    </div>
+    <!----//End-footer--->
+  </body>
+</html>

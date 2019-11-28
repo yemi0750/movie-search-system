@@ -186,6 +186,18 @@ body{
 	margin-top:10em;
 	height:6%;
 }
+.artical-content{
+	width:95%;
+	margin:0 auto;
+}
+.single_poster{
+	width:20% !important;
+	float:left;
+	margin-right:20px;
+}
+.single_content{
+	float:left;
+}
 .box{
 	position:absolute;
 	top:-100px;

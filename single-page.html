@@ -94,9 +94,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	$sql="SELECT * FROM movie WHERE title='$title'";
 	$result_set=mysqli_query($conn,$sql);
 	while($result=mysqli_fetch_array($result_set)){
-		echo '<img src="'.$result['poster_url'].'" title="banner1">
-									<h3><a href="#">'.$result['title'].'</a></h3>
-									<p>'.$result['release_year'].'년에 개봉한 영화입니다</p> 
+		echo '<div class="single_poster"><img src="'.$result['poster_url'].'" title="banner1"></div><div  class="single_content">
+									<h2>'.$result['title'].'</h2>
+									<p>'.$result['content'].'</p> </div>
 								    </div>';
 	}
 	mysqli_close($conn);

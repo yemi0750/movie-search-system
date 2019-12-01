@@ -154,7 +154,7 @@ body{
 	position:relative;
 	text-align:center
 }
-.login_id, .login_pw, .login_pwc, .login_name, .login_nm, .login_email, .login_button, .signin_button, .tohome_button{
+.login_id, .login_pw, .login_pwc, .login_name, .login_nm, .login_email, .login_button, .signin_button, .tohome_button, .login_birthday{
 
 	margin-top: 1em;
 	padding: 0.58em 1em;
@@ -175,6 +175,15 @@ body{
 	position:relative;
 	width:100%;
 }
+ .login_birthday,.login_gender{
+ 	margin-top: 4 !important;
+ }
+.signup_text{
+	margin-top: 1em;
+	padding :0.3em;
+	color:#777;
+	font-size:14px;
+}
 .login_button{
 	margin-top:2em;
 	height:6%;
@@ -193,10 +202,37 @@ body{
 .single_poster{
 	width:20% !important;
 	float:left;
-	margin-right:20px;
+	margin-right:50px;
 }
 .single_content{
 	float:left;
+}
+.story-section, .comment-section{
+	padding:3em;
+}
+.story-section h2, .comment-section h2{
+	font:400 30px/28px 'Open Sans', sans-serif;
+	color: #363636;
+	text-align: left;
+	padding: 1em 0 0.5em;
+	margin-bottom:1em;
+}
+.story-section .content{
+	color: #363636;
+	text-align: left;
+	font-size:18px;
+}
+.single_content{
+	margin-top:1em;
+}
+.sp_title{
+	font:400 80px/28px 'Open Sans', sans-serif;
+	margin-top:0.5em;
+	margin-bottom:1em;
+}
+.sp_detail{
+	font-size:28px !important;
+	line-height:1.5em !important;
 }
 .box{
 	position:absolute;
@@ -480,6 +516,10 @@ p.para {
 	line-height: 1.8em;
 	font-weight: 400;
 }
+.grids_of_1{
+
+	padding:1em;
+}
 .grids_of_2 h2 {
 	font:400 30px/28px 'Open Sans', sans-serif;
 	color: #363636;
@@ -491,12 +531,12 @@ p.para {
 }
 .grid_img{
 	float: left;
-	width: 8.33333%;
+	width: 18%;
 	margin-right: 2%;
 }
 .grid_text{
 	float: left;
-	width:88.33333%
+	width:80%
 }
 .grid_text h3{
 	text-align:left;

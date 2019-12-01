@@ -63,10 +63,11 @@
   $id=$_POST['id'];
   $pw=$_POST['pw'];
 
-  $dbname="dbtest";
+  $dbname="movie_is_jojo";
   $conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
+  mysqli_set_charset($conn, 'utf8');
   mysqli_select_db($conn,$dbname);
-  $sql="SELECT * FROM users WHERE id='$id' AND pw='$pw'";
+  $sql="SELECT * FROM users WHERE user_id='$id' AND user_password='$pw'";
   $result=mysqli_query($conn,$sql);
   if($result->num_rows==0){
     echo "<h1 class=\"login_fail_text\">일치하는 회원 정보가 없습니다.</h1>";

@@ -59,9 +59,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 		<select name="searchbar_choose" id="" class="searchbar_choose">
                   			<option value="total">통합검색</option>
                     		<option value="movie">영화검색</option>
-                    		<option value="person">영화인검색</option>
-                    		<option value="festival">영화제검색</option>
-                    		<option value="company">영화사검색</option>
+                    		<option value="actor">배우검색</option>
+                    		<option value="director">감독검색</option>
+                    		<option value="user">사용자검색</option>
                   		</select>
                 		<input name="searchbar_text" type="text" class="searchbar_text" placeholder="검색어를 입력하세요">
                 		<input type="submit" value="">
@@ -72,7 +72,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<ul>
 							<li><a href="mypage.html"><span>마이페이지</span></a></li>
 							<li><a href="mylist.html"><span>관심목록</span></a></li>
-							<li><a href="logout.html"><span>로그아웃</span></a></li>
+							<li><a href="login.html"><span>로그아웃</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -87,54 +87,103 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							<div class="single-page-artical">
 								<div class="artical-content">
 									<?php
-	$dbname="dbtest";
+	$dbname="movie_is_jojo";
 	$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
+	mysqli_set_charset($conn, 'utf8');
 	mysqli_select_db($conn,$dbname);
+	$id=$_GET['id'];
 	$title=$_GET['title'];
-	$sql="SELECT * FROM movie WHERE title='$title'";
-	$result_set=mysqli_query($conn,$sql);
-	while($result=mysqli_fetch_array($result_set)){
-		echo '<div class="single_poster"><img src="'.$result['poster_url'].'" title="banner1"></div><div  class="single_content">
-									<h2>'.$result['title'].'</h2>
-									<p>'.$result['content'].'</p> </div>
-								    </div>';
+	$count=0;
+	if($id=="movie"){
+		$sql="SELECT m.image, m.movie_name, m.release_date, m.nation, m.running_time, m.age, m.rate, m.story, d.director_name FROM (movies AS m JOIN (make JOIN directors AS d ON make.director_id=d.director_id) ON make.movie_id=m.movie_id) WHERE m.movie_name='$title'";
+		$result_set=mysqli_query($conn,$sql);
+		while($result=mysqli_fetch_array($result_set)){
+			if($count==0){
+				echo '<div class="single_poster"><img src="'.$result['image'].'" title="banner1"></div><div  class="single_content">
+									<h2 class="sp_title">'.$result['movie_name'].'</h2>
+									<p class="sp_detail">'.$result['release_date'].' 개봉 | '.$result['nation'].'<br>'.$result['running_time'].'분 | '.$result['age'].'<br>평점 '.$result['rate'].'/10<br>감독 '.$result['director_name'];
+			}
+			if($count>0 && $count<($result_set->num_rows)){
+			echo ', '.$result['director_name'];
+			}
+			if($count==($result_set->num_rows)-1){
+				echo '</p> </div>
+								    </div><div class="clear"> </div></div>
+								    <div class="story-section">
+								    <h2>줄거리</h2>
+									<div class="content">'.$result['story'].'</div></div>';
+			}
+			$count=$count+1;
+		}
+	}else if($id=="actor"){
+		$sql="SELECT a.image_link, a.actor_name, a.agency, a.debut, a.date_of_birth, a.height, a.gender, aa.awards_a, aa.awards_b FROM (actors AS a JOIN awards_actor AS aa ON a.actor_id=aa.actor_id) WHERE actor_name='$title'";
+		$result_set=mysqli_query($conn,$sql);
+		while($result=mysqli_fetch_array($result_set)){
+			echo '<div class="single_poster"><img src="'.$result['image_link'].'" title="banner1"></div><div  class="single_content">
+									<h2 class="sp_title">'.$result['actor_name'].'</h2>
+									<p class="sp_detail">'.$result['gender'].'<br>'.$result['agency'].' 소속<br>데뷔 '.$result['debut'].'<br>출생  '.$result['date_of_birth'].'<br>신체'.$result['height'].'<br>수상<br>'.$result['awards_a'].'<br>'.$result['awards_b'].'</p> </div>
+								    </div><div class="clear"> </div></div>';
+		}
+	}else if($id=="director"){
+		$sql="SELECT d.image, d.director_name, d.gender, d.date_of_birth_director, d.debut, ad.awards_a, ad.awards_b FROM (directors AS d JOIN awards_director AS ad ON d.director_id=ad.director_id) WHERE director_name='$title'";
+		$result_set=mysqli_query($conn,$sql);
+		while($result=mysqli_fetch_array($result_set)){
+			echo '<div class="single_poster"><img src="'.$result['image'].'" title="banner1"></div><div  class="single_content">
+									<h2 class="sp_title">'.$result['director_name'].'</h2>
+									<p class="sp_detail">'.$result['gender'].'<br>출생 '.$result['date_of_birth_director'].'<br>데뷔 '.$result['debut'].'<br>수상<br>'.$result['awards_a'].'<br>'.$result['awards_b'].'</p> </div>
+								    </div><div class="clear"> </div></div>';
+		}
+	}else if($id=="user"){
+
 	}
 	mysqli_close($conn);
 ?>
-		  						 <div class="clear"> </div>
-							</div>
+		  						 
 							<!---start-comments-section--->
 							<div class="comment-section">
 				<div class="grids_of_2">
-					<h2>출연정보</h2>
-					<div class="grid1_of_2">
-						<div class="grid_img">
-							<a href=""><img src="images/pic10.jpg" alt=""></a>
-						</div>
-						<div class="grid_text">
-							<h4 class="style1 list"><a href="#">Uku Mason</a></h4>
-							<h3 class="style">march 2, 2013 - 12.50 AM</h3>
-							<p class="para top"> All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
-						</div>
-						<div class="clear"></div>
+						<?php
+	$dbname="movie_is_jojo";
+	$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
+	mysqli_set_charset($conn, 'utf8');
+	mysqli_select_db($conn,$dbname);
+	$id=$_GET['id'];
+	$title=$_GET['title'];
+	if($id=="movie"){
+		echo '<h2>출연정보</h2>';
+		$sql="SELECT a.actor_name, a.image_link FROM (movies AS m JOIN (appear JOIN actors AS a ON appear.actor_code=a.actor_id) ON appear.movie_code=m.movie_id) WHERE m.movie_name='$title'";
+		$result_set=mysqli_query($conn,$sql);
+		while($result=mysqli_fetch_array($result_set)){
+			echo '<div class="grids_of_1"><div class="grid_img"><a href=\'single-page.html?id=actor&title='.$result['actor_name'].'\'><img src="'.$result['image_link'].'" title="actor"></div><div  class="grid_text">
+									<h4 class="style1 list">'.$result['actor_name'].'</h4>
+									<p class="para top"></p></div><div class="clear"></div></div>';
+		}
+	}else if($id=="actor"){
+		echo '<h2>출연작품</h2>';
+		$sql="SELECT m.movie_name, m.image,m.release_date FROM (movies AS m JOIN (appear JOIN actors AS a ON appear.actor_code=a.actor_id) ON appear.movie_code=m.movie_id) WHERE a.actor_name='$title'";
+		$result_set=mysqli_query($conn,$sql);
+		while($result=mysqli_fetch_array($result_set)){
+			echo '<div class="grids_of_1"><div class="grid_img"><a href=\'single-page.html?id=movie&title='.$result['movie_name'].'\'><img src="'.$result['image'].'" title="movie"></div><div  class="grid_text">
+									<h4 class="style1 list">'.$result['movie_name'].'</h4>
+									<p class="para top">'.$result['release_date'].'</p></div><div class="clear"></div></div>';
+		}
+	}else if($id=="director"){
+		echo '<h2>연출작품</h2>';
+		$sql="SELECT m.movie_name, m.image,m.release_date FROM (movies AS m JOIN (make JOIN directors AS d ON make.director_id=d.director_id) ON make.movie_id=m.movie_id) WHERE d.director_name='$title'";
+		$result_set=mysqli_query($conn,$sql);
+		while($result=mysqli_fetch_array($result_set)){
+			echo '<div class="grids_of_1"><div class="grid_img"><a href=\'single-page.html?id=movie&title='.$result['movie_name'].'\'><img src="'.$result['image'].'" title="movie"></div><div  class="grid_text">
+									<h4 class="style1 list">'.$result['movie_name'].'</h4>
+									<p class="para top">'.$result['release_date'].'</p></div><div class="clear"></div></div>';
+		}
+	}else if($id=="user"){
+
+	}
+	mysqli_close($conn);
+?>
+				</div>
 					</div>
-					<div class="grid1_of_2">
-						<div class="grid_img">
-							<a href=""><img src="images/pic12.jpg" alt=""></a>
-						</div>
-						<div class="grid_text">
-							<h4 class="style1 list"><a href="#">Ro Kanth</a></h4>
-							<h3 class="style">march 2, 2013 - 12.50 AM</h3>
-							<p class="para top"> All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
-						</div>
-						<div class="clear"></div>
-					</div>		
-					</div>
-			</div>
-							<!---//End-comments-section--->
-						</div>
-						 </div>
-		</div>
+		<!---//End-comments-section--->
 		<!----start-footer--->
 		<div class="footer">
 			<p>DB Project : 영화는 조조</p>

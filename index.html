@@ -60,9 +60,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 			<select name="searchbar_choose" id="" class="searchbar_choose">
                   				<option value="total">통합검색</option>
                     			<option value="movie">영화검색</option>
-                    			<option value="person">영화인검색</option>
-                    			<option value="festival">영화제검색</option>
-                    			<option value="company">영화사검색</option>
+                    			<option value="actor">배우검색</option>
+                    			<option value="director">감독검색</option>
+                    			<option value="user">사용자검색</option>
                   			</select>
                 			<input name="searchbar_text" type="text" class="searchbar_text" placeholder="검색어를 입력하세요">
                 			<input type="submit" value="">
@@ -88,17 +88,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			      <ul id="tiles">
 			        <!-- These are our grid blocks -->
 			        	<?php
-	$dbname="dbtest";
+	$dbname="movie_is_jojo";
 	$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
+	mysqli_set_charset($conn, 'utf8');
 	mysqli_select_db($conn,$dbname);
-	$sql="SELECT * FROM movie ORDER BY code";
+	$sql="SELECT * FROM movies ORDER BY movie_id";
 	$result_set=mysqli_query($conn,$sql);
 	while($result=mysqli_fetch_array($result_set)){
-		echo '<li><a href=\'single-page.html?title='.$result['title'].'\'><img src="'.$result['poster_url'].'" width="282">
+		echo '<li><a href=\'single-page.html?id=movie&title='.$result['movie_name'].'\'><img src="'.$result['image'].'" width="282">
 			        	<div class="post-info">
 			        		<div class="post-basic-info">
-				        		<h3><a href="#">'.$result['title'].'</a></h3>
-				        		<p>'.$result['release_year'].'년에 개봉한 영화입니다</p>
+				        		<h3><a href="#">'.$result['movie_name'].'</a></h3>
+				        		<p>'.$result['story'].'</p>
 			        		</div>
 			        		<div class="post-info-rate-share">
 			        			<div class="rateit">

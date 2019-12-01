@@ -53,9 +53,9 @@
                 		<select name="searchbar_choose" id="" class="searchbar_choose">
                   			<option value="total">통합검색</option>
                     		<option value="movie">영화검색</option>
-                    		<option value="person">영화인검색</option>
-                    		<option value="festival">영화제검색</option>
-                    		<option value="company">영화사검색</option>
+                    		<option value="actor">배우검색</option>
+                    		<option value="director">감독검색</option>
+                    		<option value="user">사용자검색</option>
                   		</select>
                 		<input name="searchbar_text" type="text" class="searchbar_text" placeholder="검색어를 입력하세요">
                 		<input type="submit" value="">
@@ -66,7 +66,7 @@
 						<ul>
 							<li><a href="mypage.html"><span>마이페이지</span></a></li>
 							<li><a href="mylist.html"><span>관심목록</span></a></li>
-							<li><a href="logout.html"><span>로그아웃</span></a></li>
+							<li><a href="login.html"><span>로그아웃</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -82,33 +82,37 @@
 			        <!-- These are our grid blocks -->
 			        	<?php 
 	$conn=mysqli_connect("localhost","root","1234") or die("mysql 접속 실패");
-	mysqli_select_db($conn,"dbtest");
+	mysqli_set_charset($conn, 'utf8');
+	mysqli_select_db($conn,"movie_is_jojo");
 	$text=$_POST["searchbar_text"];
 	$choose=$_POST["searchbar_choose"];
 	$sql="";
 
 	switch($choose){
 		case 'total':
-			$sql="SELECT * FROM movie WHERE title='$text'";
+			$sql="(SELECT \"movie\" AS id, movie_name AS title, image AS img, story AS content FROM movies WHERE movie_name LIKE '%".$text."%') UNION (SELECT \"actor\" AS id, actor_name AS title, image_link AS img, agency AS content FROM actors WHERE actor_name LIKE '%".$text."%') UNION (SELECT \"director\" AS id, director_name AS title, image AS img, debut AS content FROM directors WHERE director_name LIKE '%".$text."%')";
 			break;
 		case 'movie':
-			$sql="SELECT * FROM movie WHERE title='$text'";
+			$sql="SELECT \"movie\" AS id, movie_name AS title, image AS img, story AS content FROM movies WHERE movie_name LIKE '%".$text."%'";
 			break;
-		case 'person':
+		case 'actor':
+			$sql="SELECT \"actor\" AS id, actor_name AS title, image_link AS img, agency AS content FROM actors WHERE actor_name LIKE '%".$text."%'";
 			break;
-		case 'festival':
+		case 'director':
+			$sql="SELECT \"director\" AS id, director_name AS title, image AS img, debut AS content FROM directors WHERE director_name LIKE '%".$text."%'";
 			break;
-		case 'company':
+		case 'user':
+			$sql="SELECT \"user\" AS id, nickname AS title FROM users WHERE nickname LIKE '%".$text."%'";
 			break;
 	}
 
 	$result_set=mysqli_query($conn,$sql);
 	while($result=mysqli_fetch_array($result_set)){
-		echo '<li><a href=\'single-page.html?title='.$result['title'].'\'><img src="'.$result['poster_url'].'" width="282">
+		echo '<li><a href=\'single-page.html?id='.$result['id'].'&title='.$result['title'].'\'><img src="'.$result['img'].'" width="282">
 			        	<div class="post-info">
 			        		<div class="post-basic-info">
 				        		<h3><a href="#">'.$result['title'].'</a></h3>
-				        		<p>'.$result['release_year'].'년에 개봉한 영화입니다</p>
+				        		<p>'.$result['content'].'</p>
 			        		</div>
 			        		<div class="post-info-rate-share">
 			        			<div class="rateit">

@@ -55,7 +55,6 @@
                     		<option value="movie">영화검색</option>
                     		<option value="actor">배우검색</option>
                     		<option value="director">감독검색</option>
-                    		<option value="user">사용자검색</option>
                   		</select>
                 		<input name="searchbar_text" type="text" class="searchbar_text" placeholder="검색어를 입력하세요">
                 		<input type="submit" value="">
@@ -100,9 +99,6 @@
 			break;
 		case 'director':
 			$sql="SELECT \"director\" AS id, director_name AS title, image AS img, debut AS content FROM directors WHERE director_name LIKE '%".$text."%'";
-			break;
-		case 'user':
-			$sql="SELECT \"user\" AS id, nickname AS title FROM users WHERE nickname LIKE '%".$text."%'";
 			break;
 	}
 

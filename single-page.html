@@ -61,7 +61,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     		<option value="movie">영화검색</option>
                     		<option value="actor">배우검색</option>
                     		<option value="director">감독검색</option>
-                    		<option value="user">사용자검색</option>
                   		</select>
                 		<input name="searchbar_text" type="text" class="searchbar_text" placeholder="검색어를 입력하세요">
                 		<input type="submit" value="">
@@ -101,10 +100,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			if($count==0){
 				echo '<div class="single_poster"><img src="'.$result['image'].'" title="banner1"></div><div  class="single_content">
 									<h2 class="sp_title">'.$result['movie_name'].'</h2>
-									<p class="sp_detail">'.$result['release_date'].' 개봉 | '.$result['nation'].'<br>'.$result['running_time'].'분 | '.$result['age'].'<br>평점 '.$result['rate'].'/10<br>감독 '.$result['director_name'];
+									<p class="sp_detail">'.$result['release_date'].' 개봉 | '.$result['nation'].'<br>'.$result['running_time'].'분 | '.$result['age'].'<br>평점 '.$result['rate'].'/10<br>감독 <a href=\'single-page.html?id=director&title='.$result['director_name'].'\'>'.$result['director_name'].'</a>';
 			}
 			if($count>0 && $count<($result_set->num_rows)){
-			echo ', '.$result['director_name'];
+			echo ', <a href=\'single-page.html?id=director&title='.$result['director_name'].'\'>'.$result['director_name'].'</a>';
 			}
 			if($count==($result_set->num_rows)-1){
 				echo '</p> </div>
@@ -121,8 +120,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		while($result=mysqli_fetch_array($result_set)){
 			echo '<div class="single_poster"><img src="'.$result['image_link'].'" title="banner1"></div><div  class="single_content">
 									<h2 class="sp_title">'.$result['actor_name'].'</h2>
-									<p class="sp_detail">'.$result['gender'].'<br>'.$result['agency'].' 소속<br>데뷔 '.$result['debut'].'<br>출생  '.$result['date_of_birth'].'<br>신체'.$result['height'].'<br>수상<br>'.$result['awards_a'].'<br>'.$result['awards_b'].'</p> </div>
-								    </div><div class="clear"> </div></div>';
+									<p class="sp_detail">';
+			if($result['gender']){
+				echo $result['gender'].'<br>';
+			}
+			if($result['agency']){
+				echo $result['agency'].' 소속<br>';
+			}
+			if($result['debut']){
+				echo '데뷔 '.$result['debut'].'<br>';
+			}
+			if($result['date_of_birth']){
+				echo '출생 '.$result['date_of_birth'].'<br>';
+			}
+			if($result['height']){
+				echo '신체 '.$result['height'].'<br>';
+			}
+			if($result['awards_a']){
+				echo '수상<br>'.$result['awards_a'].'<br>'.$result['awards_b'];
+			}
+			echo '</p> </div></div><div class="clear"> </div></div>';
 		}
 	}else if($id=="director"){
 		$sql="SELECT d.image, d.director_name, d.gender, d.date_of_birth_director, d.debut, ad.awards_a, ad.awards_b FROM (directors AS d JOIN awards_director AS ad ON d.director_id=ad.director_id) WHERE director_name='$title'";
@@ -130,11 +147,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		while($result=mysqli_fetch_array($result_set)){
 			echo '<div class="single_poster"><img src="'.$result['image'].'" title="banner1"></div><div  class="single_content">
 									<h2 class="sp_title">'.$result['director_name'].'</h2>
-									<p class="sp_detail">'.$result['gender'].'<br>출생 '.$result['date_of_birth_director'].'<br>데뷔 '.$result['debut'].'<br>수상<br>'.$result['awards_a'].'<br>'.$result['awards_b'].'</p> </div>
-								    </div><div class="clear"> </div></div>';
+									<p class="sp_detail">';
+			if($result['gender']){
+				echo $result['gender'].'<br>';
+			}
+			if($result['date_of_birth_director']){
+				echo '출생 '.$result['date_of_birth_director'].'<br>';
+			}
+			if($result['debut']){
+				echo '데뷔 '.$result['debut'].'<br>';
+			}
+			if($result['awards_a']){
+				echo '수상<br>'.$result['awards_a'].'<br>'.$result['awards_b'];
+			}
+			echo '</p> </div></div><div class="clear"> </div></div>';
 		}
 	}else if($id=="user"){
-
+	
 	}
 	mysqli_close($conn);
 ?>

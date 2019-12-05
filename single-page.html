@@ -218,8 +218,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									<p class="para top">'.$result['role'].'</p></div><div class="clear"></div></div>';
 		}
 		echo '</div><div class="grids_of_22">';
-		echo '<h2>이 영화에 interest를 누른 사용자</h2>';
-		$sql="SELECT i.user_id FROM movies AS m JOIN user_interest AS i ON m.movie_id=i.movie_id WHERE m.movie_name='$title'";
+		echo '<h2>이 영화를 재밌게 본 사용자</h2>';
+		$sql="SELECT i.user_id FROM movies AS m JOIN user_good AS i ON m.movie_id=i.movie_id WHERE m.movie_name='$title'";
 		$result_set=mysqli_query($conn,$sql);
 		if(mysqli_num_rows($result_set) < 1){
 			echo '<div class="grids_of_1"><div  class="grid_text"><h4 class="style1 list">없습니다.</h4></div><div class="clear"></div></div></div>';

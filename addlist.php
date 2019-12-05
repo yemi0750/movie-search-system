@@ -10,13 +10,13 @@
 
 	switch($list){
 		case 'interest':
-			$sql="SELECT * FROM user_interest WHERE movie_id='$id' AND user_id='".$_SESSION['id']."'";
+			$sql="SELECT * FROM user_good WHERE movie_id='$id' AND user_id='".$_SESSION['id']."'";
 			$result_set=mysqli_query($conn,$sql);
 			if(mysqli_num_rows($result_set) <1){
-				$sql2="INSERT INTO user_interest(user_id, movie_id) VALUES ('".$_SESSION['id']."','$id')";
+				$sql2="INSERT INTO user_good(user_id, movie_id) VALUES ('".$_SESSION['id']."','$id')";
 			}
 			else{
-				$sql2="DELETE FROM user_interest WHERE movie_id='$id' AND user_id='".$_SESSION['id']."'";
+				$sql2="DELETE FROM user_good WHERE movie_id='$id' AND user_id='".$_SESSION['id']."'";
 			}
 			break;
 		case 'wishlist':

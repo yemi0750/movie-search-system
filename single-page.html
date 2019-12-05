@@ -133,11 +133,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			$count=$count+1;
 		}
 	}else if($id=="actor"){
-		$sql="SELECT a.image_link, a.actor_id, a.actor_name, a.agency, a.debut, a.date_of_birth, a.height, a.gender, aa.awards_a, aa.awards_b FROM (actors AS a JOIN awards_actor AS aa ON a.actor_id=aa.actor_id) WHERE actor_name='$title'";
+		$sql="SELECT a.image_link, a.actor_id, a.actor_name, a.agency, a.debut, a.date_of_birth, a.height, a.gender FROM actors AS a WHERE actor_name='$title'";
 		$result_set=mysqli_query($conn,$sql);
 		while($result=mysqli_fetch_array($result_set)){
 			echo '<div class="spost-info-rate-share">
-								<button type="button" onclick="location.href=\'addlist.php?list=banlist&id='.$result['actor_id'].'\'; button_click(\''.$result['actor_name'].'이(가) uninterest에 \');" class="sadd_uninterest">
+								<button type="button" onclick="location.href=\'addlist.php?list=banlist_actor&id='.$result['actor_id'].'\'; button_click(\''.$result['actor_name'].'이(가) uninterest에 \');" class="sadd_uninterest">
 			        				<span> </span>
 			        			</button>
 			        			<div class="clear"> </div>
@@ -160,17 +160,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			if($result['height']){
 				echo '신체 '.$result['height'].'<br>';
 			}
-			if($result['awards_a']){
-				echo '수상<br>'.$result['awards_a'].'<br>'.$result['awards_b'];
+			$sql2="SELECT award FROM awards_actors AS aa JOIN actors AS a ON a.actor_id=aa.actors_id WHERE aa.actors_id='".$result['actor_id']."'";
+			$result_set2=mysqli_query($conn,$sql2);
+			if(mysqli_num_rows($result_set2) >0){
+				echo '수상<br>';
+			}
+			while($result2=mysqli_fetch_array($result_set2)){
+				echo $result2['award'].'<br>';
 			}
 			echo '</p> </div></div><div class="clear"> </div></div>';
 		}
 	}else if($id=="director"){
-		$sql="SELECT d.image, d.director_id, d.director_name, d.gender, d.date_of_birth_director, d.debut, ad.awards_a, ad.awards_b FROM (directors AS d JOIN awards_director AS ad ON d.director_id=ad.director_id) WHERE director_name='$title'";
+		$sql="SELECT d.image, d.director_id, d.director_name, d.gender, d.date_of_birth_director, d.debut FROM directors AS d WHERE director_name='$title'";
 		$result_set=mysqli_query($conn,$sql);
 		while($result=mysqli_fetch_array($result_set)){
 			echo '<div class="spost-info-rate-share">
-								<button type="button" onclick="location.href=\'addlist.php?list=banlist&id='.$result['director_id'].'\'; button_click(\''.$result['director_name'].'이(가) uninterest에 \');" class="sadd_uninterest">
+								<button type="button" onclick="location.href=\'addlist.php?list=banlist_director&id='.$result['director_id'].'\'; button_click(\''.$result['director_name'].'이(가) uninterest에 \');" class="sadd_uninterest">
 			        				<span> </span>
 			        			</button>
 			        			<div class="clear"> </div>
@@ -187,8 +192,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			if($result['debut']){
 				echo '데뷔 '.$result['debut'].'<br>';
 			}
-			if($result['awards_a']){
-				echo '수상<br>'.$result['awards_a'].'<br>'.$result['awards_b'];
+			$sql2="SELECT award FROM awards_directors AS ad JOIN directors AS d ON d.director_id=ad.director_id WHERE ad.director_id='".$result['director_id']."'";
+			$result_set2=mysqli_query($conn,$sql2);
+			if(mysqli_num_rows($result_set2) >0){
+				echo '수상<br>';
+			}
+			while($result2=mysqli_fetch_array($result_set2)){
+				echo $result2['award'].'<br>';
 			}
 			echo '</p> </div></div><div class="clear"> </div></div>';
 		}

@@ -124,11 +124,17 @@
 			        			</button>';
 			    break;
 			case 'actor':
-			case 'director':
 				echo '<div class="post-info-rate-share">
-			        			<button type="button" onclick="location.href=\'addlist.php?list=banlist&id='.$result['adid'].'\'; button_click(\''.$result['title'].'이(가) block목록에 \');" class="add_uninterest">
+			        			<button type="button" onclick="location.href=\'addlist.php?list=banlist_actor&id='.$result['adid'].'\'; button_click(\''.$result['title'].'이(가) block목록에 \');" class="add_uninterest">
 			        				<span> </span>
 			        			</button>';
+			    break;
+			case 'director':
+				echo '<div class="post-info-rate-share">
+			        			<button type="button" onclick="location.href=\'addlist.php?list=banlist_director&id='.$result['adid'].'\'; button_click(\''.$result['title'].'이(가) block목록에 \');" class="add_uninterest">
+			        				<span> </span>
+			        			</button>';
+			    break;
 		}
 		echo '<div class="clear"> </div>
 			        		</div>

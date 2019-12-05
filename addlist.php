@@ -7,24 +7,38 @@
 	$list=$_GET['list'];
 	$id=$_GET['id'];
 	$sql2="";
+	$tablename="";
+	$var="";
 
 	switch($list){
 		case 'interest':
-			$sql="SELECT * FROM user_good WHERE movie_id='$id' AND user_id='".$_SESSION['id']."'";
-			$result_set=mysqli_query($conn,$sql);
-			if(mysqli_num_rows($result_set) <1){
-				$sql2="INSERT INTO user_good(user_id, movie_id) VALUES ('".$_SESSION['id']."','$id')";
-			}
-			else{
-				$sql2="DELETE FROM user_good WHERE movie_id='$id' AND user_id='".$_SESSION['id']."'";
-			}
+			$tablename="user_good";
+			$var="movie_id";
 			break;
 		case 'wishlist':
+			$tablename="user_want";
+			$var="movie_id";
 			break;
 		case 'uninterest':
+			$tablename="user_bad";
+			$var="movie_id";
 			break;
-		case 'banlist':
+		case 'banlist_actor':
+			$tablename="user_hate_act";
+			$var="actor_id";
 			break;
+		case 'banlist_director':
+			$tablename="user_hate_dir";
+			$var="director_id";
+			break;
+	}
+	$sql="SELECT * FROM ".$tablename." WHERE ".$varmovie_id."='$id' AND user_id='".$_SESSION['id']."'";
+	$result_set=mysqli_query($conn,$sql);
+	if(mysqli_num_rows($result_set) <1){
+		$sql2="INSERT INTO ".$tablename."(user_id, ".$var.") VALUES ('".$_SESSION['id']."','$id')";
+	}
+	else{
+		$sql2="DELETE FROM ".$tablename." WHERE ".$var."='$id' AND user_id='".$_SESSION['id']."'";
 	}
 	$result_set=mysqli_query($conn,$sql2);
 	mysqli_close($conn);

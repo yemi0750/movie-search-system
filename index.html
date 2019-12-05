@@ -71,7 +71,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="mmenu">
 							<ul>
 								<li><a href="mypage.html"><span>마이페이지</span></a></li>
-								<li><a href="mylist.html"><span>관심목록</span></a></li>
+								<li><a href="mylist.html"><span>마이무비</span></a></li>
 								<li><a href="login.html"><span>로그아웃</span></a></li>
 							</ul>
 						</div>
@@ -101,12 +101,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				        		<p>'.$result['story'].'</p>
 			        		</div>
 			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
+			        			<button type="button" onclick="location.href=\'addlist.php?list=interest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) interest에 \');" class="add_interest">
 			        				<span></span>
-			        			</div>
-			        			<div class="post-share">
+			        			</button>
+			        			<button type="button" onclick="location.href=\'addlist.php?list=wishlist&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) wishlist에 \');" class="add_wishlist">
 			        				<span> </span>
-			        			</div>
+			        			</button>
+			        			<button type="button" onclick="location.href=\'addlist.php?list=uninterest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) uninterest에 \');" class="add_uninterest">
+			        				<span> </span>
+			        			</button>
 			        			<div class="clear"> </div>
 			        		</div>
 			        	</div>
@@ -168,6 +171,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		      // Capture scroll event.
 		      $window.bind('scroll.wookmark', onScroll);
 		    })(jQuery);
+		  </script>
+		  <script>
+		  	//$('.add_interest').click(function(){
+				//$('this').css('background', 'url(../images/like2.png)');
+			//});
+
+			function button_click(s){
+				alert(s+"추가되었습니다");
+			}
 		  </script>
 		<!----//wookmark-scripts---->
 		<!----start-footer--->

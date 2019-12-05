@@ -70,7 +70,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="mmenu">
 						<ul>
 							<li><a href="mypage.html"><span>마이페이지</span></a></li>
-							<li><a href="mylist.html"><span>관심목록</span></a></li>
+							<li><a href="mylist.html"><span>마이무비</span></a></li>
 							<li><a href="login.html"><span>로그아웃</span></a></li>
 						</ul>
 					</div>
@@ -94,13 +94,31 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	$title=$_GET['title'];
 	$count=0;
 	if($id=="movie"){
-		$sql="SELECT m.image, m.movie_name, m.release_date, m.nation, m.running_time, m.age, m.rate, m.story, d.director_name FROM (movies AS m JOIN (make JOIN directors AS d ON make.director_id=d.director_id) ON make.movie_id=m.movie_id) WHERE m.movie_name='$title'";
+		$sql="SELECT m.movie_id, m.image, m.movie_name, m.release_date, m.nation, m.running_time, m.age, m.rate, m.story, d.director_name FROM (movies AS m JOIN (make JOIN directors AS d ON make.director_id=d.director_id) ON make.movie_id=m.movie_id) WHERE m.movie_name='$title'";
 		$result_set=mysqli_query($conn,$sql);
 		while($result=mysqli_fetch_array($result_set)){
 			if($count==0){
-				echo '<div class="single_poster"><img src="'.$result['image'].'" title="banner1"></div><div  class="single_content">
+				echo '<div class="spost-info-rate-share">
+								<button type="button" onclick="location.href=\'addlist.php?list=uninterest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) uninterest에 \');" class="sadd_uninterest">
+			        				<span> </span>
+			        			</button>
+			        			<button type="button" onclick="location.href=\'addlist.php?list=wishlist&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) wishlist에 \');" class="sadd_wishlist">
+			        				<span> </span>
+			        			</button>
+			        			<button type="button" onclick="location.href=\'addlist.php?list=interest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) interest에 \');" class="sadd_interest">
+			        				<span></span>
+			        			</button>
+			        			<div class="clear"> </div>
+			        		</div>
+			        		<div class="single_poster"><img src="'.$result['image'].'" title="banner1"></div><div  class="single_content">
 									<h2 class="sp_title">'.$result['movie_name'].'</h2>
-									<p class="sp_detail">'.$result['release_date'].' 개봉 | '.$result['nation'].'<br>'.$result['running_time'].'분 | '.$result['age'].'<br>평점 '.$result['rate'].'/10<br>감독 <a href=\'single-page.html?id=director&title='.$result['director_name'].'\'>'.$result['director_name'].'</a>';
+									<p class="sp_detail">'.$result['release_date'].' 개봉 | '.$result['nation'].'<br>'.$result['running_time'].'분 | '.$result['age'].'<br>장르 ';
+				$sql2="SELECT genre FROM genre AS g JOIN movies AS m ON (m.movie_id = g.movie_id) WHERE m.movie_id=".$result['movie_id'];
+				$result_set2=mysqli_query($conn,$sql2);
+				while($result2=mysqli_fetch_array($result_set2)){
+					echo $result2['genre'].' ';
+				}
+				echo '<br>평점 '.$result['rate'].'/10<br>감독 <a href=\'single-page.html?id=director&title='.$result['director_name'].'\'>'.$result['director_name'].'</a>';
 			}
 			if($count>0 && $count<($result_set->num_rows)){
 			echo ', <a href=\'single-page.html?id=director&title='.$result['director_name'].'\'>'.$result['director_name'].'</a>';
@@ -115,10 +133,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			$count=$count+1;
 		}
 	}else if($id=="actor"){
-		$sql="SELECT a.image_link, a.actor_name, a.agency, a.debut, a.date_of_birth, a.height, a.gender, aa.awards_a, aa.awards_b FROM (actors AS a JOIN awards_actor AS aa ON a.actor_id=aa.actor_id) WHERE actor_name='$title'";
+		$sql="SELECT a.image_link, a.actor_id, a.actor_name, a.agency, a.debut, a.date_of_birth, a.height, a.gender, aa.awards_a, aa.awards_b FROM (actors AS a JOIN awards_actor AS aa ON a.actor_id=aa.actor_id) WHERE actor_name='$title'";
 		$result_set=mysqli_query($conn,$sql);
 		while($result=mysqli_fetch_array($result_set)){
-			echo '<div class="single_poster"><img src="'.$result['image_link'].'" title="banner1"></div><div  class="single_content">
+			echo '<div class="spost-info-rate-share">
+								<button type="button" onclick="location.href=\'addlist.php?list=banlist&id='.$result['actor_id'].'\'; button_click(\''.$result['actor_name'].'이(가) uninterest에 \');" class="sadd_uninterest">
+			        				<span> </span>
+			        			</button>
+			        			<div class="clear"> </div>
+			        		</div>
+			        		<div class="single_poster"><img src="'.$result['image_link'].'" title="banner1"></div><div  class="single_content">
 									<h2 class="sp_title">'.$result['actor_name'].'</h2>
 									<p class="sp_detail">';
 			if($result['gender']){
@@ -142,10 +166,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			echo '</p> </div></div><div class="clear"> </div></div>';
 		}
 	}else if($id=="director"){
-		$sql="SELECT d.image, d.director_name, d.gender, d.date_of_birth_director, d.debut, ad.awards_a, ad.awards_b FROM (directors AS d JOIN awards_director AS ad ON d.director_id=ad.director_id) WHERE director_name='$title'";
+		$sql="SELECT d.image, d.director_id, d.director_name, d.gender, d.date_of_birth_director, d.debut, ad.awards_a, ad.awards_b FROM (directors AS d JOIN awards_director AS ad ON d.director_id=ad.director_id) WHERE director_name='$title'";
 		$result_set=mysqli_query($conn,$sql);
 		while($result=mysqli_fetch_array($result_set)){
-			echo '<div class="single_poster"><img src="'.$result['image'].'" title="banner1"></div><div  class="single_content">
+			echo '<div class="spost-info-rate-share">
+								<button type="button" onclick="location.href=\'addlist.php?list=banlist&id='.$result['director_id'].'\'; button_click(\''.$result['director_name'].'이(가) uninterest에 \');" class="sadd_uninterest">
+			        				<span> </span>
+			        			</button>
+			        			<div class="clear"> </div>
+			        		</div>
+			        		<div class="single_poster"><img src="'.$result['image'].'" title="banner1"></div><div  class="single_content">
 									<h2 class="sp_title">'.$result['director_name'].'</h2>
 									<p class="sp_detail">';
 			if($result['gender']){
@@ -180,20 +210,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	$title=$_GET['title'];
 	if($id=="movie"){
 		echo '<h2>출연정보</h2>';
-		$sql="SELECT a.actor_name, a.image_link FROM (movies AS m JOIN (appear JOIN actors AS a ON appear.actor_code=a.actor_id) ON appear.movie_code=m.movie_id) WHERE m.movie_name='$title'";
+		$sql="SELECT a.actor_name, a.image_link, appear.role FROM (movies AS m JOIN (appear JOIN actors AS a ON appear.actor_id=a.actor_id) ON appear.movie_id=m.movie_id) WHERE m.movie_name='$title'";
 		$result_set=mysqli_query($conn,$sql);
 		while($result=mysqli_fetch_array($result_set)){
 			echo '<div class="grids_of_1"><div class="grid_img"><a href=\'single-page.html?id=actor&title='.$result['actor_name'].'\'><img src="'.$result['image_link'].'" title="actor"></div><div  class="grid_text">
-									<h4 class="style1 list">'.$result['actor_name'].'</h4>
-									<p class="para top"></p></div><div class="clear"></div></div>';
+									<h4 class="style1 list">'.$result['actor_name'].'</h4></a>
+									<p class="para top">'.$result['role'].'</p></div><div class="clear"></div></div>';
 		}
+		echo '</div><div class="grids_of_22">';
+		echo '<h2>이 영화에 interest를 누른 사용자</h2>';
+		$sql="SELECT i.user_id FROM movies AS m JOIN user_interest AS i ON m.movie_id=i.movie_id WHERE m.movie_name='$title'";
+		$result_set=mysqli_query($conn,$sql);
+		if(mysqli_num_rows($result_set) < 1){
+			echo '<div class="grids_of_1"><div  class="grid_text"><h4 class="style1 list">없습니다.</h4></div><div class="clear"></div></div></div>';
+		}
+		while($result=mysqli_fetch_array($result_set)){
+			echo '<div class="grids_of_1"><div  class="grid_text"><a href=\'single-page.html?id=user&title=null\'><h4 class="style1 list">'.$result['user_id'].'</h4></a></div><div class="clear"></div></div>';
+		}
+		echo '</div>';
+
 	}else if($id=="actor"){
 		echo '<h2>출연작품</h2>';
-		$sql="SELECT m.movie_name, m.image,m.release_date FROM (movies AS m JOIN (appear JOIN actors AS a ON appear.actor_code=a.actor_id) ON appear.movie_code=m.movie_id) WHERE a.actor_name='$title'";
+		$sql="SELECT m.movie_name, m.image,m.release_date FROM (movies AS m JOIN (appear JOIN actors AS a ON appear.actor_id=a.actor_id) ON appear.movie_id=m.movie_id) WHERE a.actor_name='$title'";
 		$result_set=mysqli_query($conn,$sql);
 		while($result=mysqli_fetch_array($result_set)){
 			echo '<div class="grids_of_1"><div class="grid_img"><a href=\'single-page.html?id=movie&title='.$result['movie_name'].'\'><img src="'.$result['image'].'" title="movie"></div><div  class="grid_text">
-									<h4 class="style1 list">'.$result['movie_name'].'</h4>
+									<h4 class="style1 list">'.$result['movie_name'].'</h4></a>
 									<p class="para top">'.$result['release_date'].'</p></div><div class="clear"></div></div>';
 		}
 	}else if($id=="director"){

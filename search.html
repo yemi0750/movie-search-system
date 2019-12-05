@@ -64,7 +64,7 @@
 					<div class="mmenu">
 						<ul>
 							<li><a href="mypage.html"><span>마이페이지</span></a></li>
-							<li><a href="mylist.html"><span>관심목록</span></a></li>
+							<li><a href="mylist.html"><span>마이무비</span></a></li>
 							<li><a href="login.html"><span>로그아웃</span></a></li>
 						</ul>
 					</div>
@@ -89,16 +89,16 @@
 
 	switch($choose){
 		case 'total':
-			$sql="(SELECT \"movie\" AS id, movie_name AS title, image AS img, story AS content FROM movies WHERE movie_name LIKE '%".$text."%') UNION (SELECT \"actor\" AS id, actor_name AS title, image_link AS img, agency AS content FROM actors WHERE actor_name LIKE '%".$text."%') UNION (SELECT \"director\" AS id, director_name AS title, image AS img, debut AS content FROM directors WHERE director_name LIKE '%".$text."%')";
+			$sql="(SELECT \"movie\" AS id, movie_id AS adid, movie_name AS title, image AS img, story AS content FROM movies WHERE movie_name LIKE '%".$text."%') UNION (SELECT \"actor\" AS id, actor_id AS adid, actor_name AS title, image_link AS img, agency AS content FROM actors WHERE actor_name LIKE '%".$text."%') UNION (SELECT \"director\" AS id, director_id AS adid, director_name AS title, image AS img, debut AS content FROM directors WHERE director_name LIKE '%".$text."%')";
 			break;
 		case 'movie':
-			$sql="SELECT \"movie\" AS id, movie_name AS title, image AS img, story AS content FROM movies WHERE movie_name LIKE '%".$text."%'";
+			$sql="SELECT \"movie\" AS id, movie_id AS adid, movie_name AS title, image AS img, story AS content FROM movies WHERE movie_name LIKE '%".$text."%'";
 			break;
 		case 'actor':
-			$sql="SELECT \"actor\" AS id, actor_name AS title, image_link AS img, agency AS content FROM actors WHERE actor_name LIKE '%".$text."%'";
+			$sql="SELECT \"actor\" AS id, actor_id AS adid, actor_name AS title, image_link AS img, agency AS content FROM actors WHERE actor_name LIKE '%".$text."%'";
 			break;
 		case 'director':
-			$sql="SELECT \"director\" AS id, director_name AS title, image AS img, debut AS content FROM directors WHERE director_name LIKE '%".$text."%'";
+			$sql="SELECT \"director\" AS id, director_id AS adid, director_name AS title, image AS img, debut AS content FROM directors WHERE director_name LIKE '%".$text."%'";
 			break;
 	}
 
@@ -109,15 +109,28 @@
 			        		<div class="post-basic-info">
 				        		<h3><a href="#">'.$result['title'].'</a></h3>
 				        		<p>'.$result['content'].'</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
+			        		</div>';
+		switch($result['id']){
+			case 'movie':
+				echo '<div class="post-info-rate-share">
+			        			<button type="button" onclick="location.href=\'addlist.php?list=interest&id='.$result['adid'].'\'; button_click(\''.$result['title'].'이(가) interest에 \');" class="add_interest">
+			        				<span></span>
+			        			</button>
+			        			<button type="button" onclick="location.href=\'addlist.php?list=wishlist&id='.$result['adid'].'\'; button_click(\''.$result['title'].'이(가) wishlist에 \');" class="add_wishlist">
 			        				<span> </span>
-			        			</div>
-			        			<div class="post-share">
+			        			</button>
+			        			<button type="button" onclick="location.href=\'addlist.php?list=wishlist&id='.$result['adid'].'\'; button_click(\''.$result['title'].'이(가) uninterest에 \');" class="add_uninterest">
 			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
+			        			</button>';
+			    break;
+			case 'actor':
+			case 'director':
+				echo '<div class="post-info-rate-share">
+			        			<button type="button" onclick="location.href=\'addlist.php?list=banlist&id='.$result['adid'].'\'; button_click(\''.$result['title'].'이(가) block목록에 \');" class="add_uninterest">
+			        				<span> </span>
+			        			</button>';
+		}
+		echo '<div class="clear"> </div>
 			        		</div>
 			        	</div>
 			        </li>';
@@ -177,6 +190,11 @@
 		      // Capture scroll event.
 		      $window.bind('scroll.wookmark', onScroll);
 		    })(jQuery);
+		  </script>
+		  <script>
+		  	function button_click(s){
+				alert(s+"추가되었습니다");
+			}
 		  </script>
 		<!----//wookmark-scripts---->
 		<!----start-footer--->

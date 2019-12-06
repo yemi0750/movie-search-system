@@ -80,7 +80,7 @@
 			      <ul id="tiles">
 			        <!-- These are our grid blocks -->
 			        	<?php 
-	$conn=mysqli_connect("localhost","root","1234") or die("mysql 접속 실패");
+	$conn=mysqli_connect("localhost:3306","root","5212245") or die("mysql 접속 실패");
 	mysqli_set_charset($conn, 'utf8');
 	mysqli_select_db($conn,"movie_is_jojo");
 	$text=$_POST["searchbar_text"];

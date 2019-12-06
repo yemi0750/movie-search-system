@@ -87,7 +87,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<div class="artical-content">
 									<?php
 	$dbname="movie_is_jojo";
-	$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
+	$conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
 	mysqli_set_charset($conn, 'utf8');
 	mysqli_select_db($conn,$dbname);
 	$id=$_GET['id'];
@@ -173,7 +173,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="grids_of_2">
 						<?php
 	$dbname="movie_is_jojo";
-	$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
+	$conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
 	mysqli_set_charset($conn, 'utf8');
 	mysqli_select_db($conn,$dbname);
 	$id=$_GET['id'];

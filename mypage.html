@@ -58,13 +58,59 @@
         <div id="main" role="main">
           <div>
             <?php
-    include("session.php");
-    echo "<h1>".$_SESSION['id']."님 마이페이지</h1>";
-    ?>
-          </div>
-        </div>
-      </div>
-    </div>
+          include("session.php");
+          echo "<h1>".$_SESSION['id']."님 마이페이지</h1>";
+            
+  
+          $dbname="movie_is_jojo";
+          $conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
+          mysqli_set_charset($conn, 'utf8');
+          mysqli_select_db($conn,$dbname);
+            
+          $sql="SELECT * FROM users WHERE user_id='".$_SESSION['id']."'";
+          $result_set=mysqli_query($conn,$sql);
+          while($result=mysqli_fetch_array($result_set)){
+              echo '<div class="content">
+                  <div class="wrap">
+                    <div id="login_main" role="main">
+                      <div id="loginForm">
+                        <form method="post" action="mypage2.html">
+                          <div class="id">
+                <input type="text" value="" readonly class="login_id" name="id"  placeholder="아이디: '.$_SESSION['id'].'" />';
+                //text 값 수정 못하게 하는 //다시
+                  echo'</div>';
+                  echo '<div class="pw">
+                  <input type="text" class="login_pw" name="pw" placeholder="비밀번호: '.$result['user_password'].'" required/>
+                </div>
+                <div class="name">
+                  <input type="text" class="login_name" name="name" placeholder="이름: '.$result['user_name'].'" required/>
+               </div>
+               <div class="nickname">
+                  <input type="text" class="login_nm" name="nickname" placeholder="닉네임: '.$result['nickname'].'" required/>';
+                  echo '</div>';
+                  echo '<div class="email">
+                  <input type="text" class="login_email" name="email" placeholder="이메일: '.$result['email'].'" required/>';
+                  echo '</div>';
+                  echo '<div class="birthday">
+                  <h6 class="signup_text">생년월일: '.$result['date_of_birth'].'</h6>
+                  <input type="date" class="login_birthday" name="birthday" required/>';
+                  echo ' </div>';
+                  echo '<div class="gender">
+                  <h6 class="signup_text">성별: '.$result['gender'].'</h6>
+                  <input type="radio" class="login_gender" name="gender" value="female">여자
+                  <input type="radio" class="login_gender" name="gender" value="male">남자';
+                  echo '</div>';
+                  echo '<div class="submit">
+                  <button class="login_button" type="submit"> 정보 수정 </button>';
+                  echo '</div>';
+                  echo '</form>';
+                  echo '</div>';
+                  echo '</div>';
+                  echo '</div>';
+                  echo '</div>';
+                  }
+          mysqli_close($conn);
+        ?>
     <!---//End-content---->
     <!----start-footer--->
     <div class="footer">

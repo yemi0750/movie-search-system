@@ -71,7 +71,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="mmenu">
 							<ul>
 								<li><a href="mypage.html"><span>마이페이지</span></a></li>
-								<li><a href="mylist.html"><span>관심목록</span></a></li>
+								<li><a href="mylist.html"><span>마이무비</span></a></li>
 								<li><a href="login.html"><span>로그아웃</span></a></li>
 							</ul>
 						</div>
@@ -86,35 +86,43 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			 <div id="main" role="main">
 			      <ul id="tiles">
 			        <!-- These are our grid blocks -->
-			        	<?php
-	$dbname="movie_is_jojo";
-	$conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
-	mysqli_set_charset($conn, 'utf8');
-	mysqli_select_db($conn,$dbname);
-	$sql="SELECT * FROM movies ORDER BY movie_id";
-	$result_set=mysqli_query($conn,$sql);
-	while($result=mysqli_fetch_array($result_set)){
-		echo '<li><a href=\'single-page.html?id=movie&title='.$result['movie_name'].'\'><img src="'.$result['image'].'" width="282">
-			        	<div class="post-info">
-			        		<div class="post-basic-info">
-				        		<h3><a href="#">'.$result['movie_name'].'</a></h3>
-				        		<p>'.$result['story'].'</p>
-			        		</div>
-			        		<div class="post-info-rate-share">
-			        			<div class="rateit">
-			        				<span></span>
-			        			</div>
-			        			<div class="post-share">
-			        				<span> </span>
-			        			</div>
-			        			<div class="clear"> </div>
-			        		</div>
-			        	</div>
-			        </a>
-			        </li>';
-	}
-	mysqli_close($conn);
-?>
+			    <?php
+				$dbname="movie_is_jojo";
+				$conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
+				mysqli_set_charset($conn, 'utf8');
+				mysqli_select_db($conn,$dbname);
+
+				$sql="SELECT * FROM movies ORDER BY movie_id" AND "select movie_id from movie_is_jojo.movies 
+				//
+					
+	
+
+				$result_set=mysqli_query($conn,$sql);
+				while($result=mysqli_fetch_array($result_set)){
+					echo '<li><a href=\'single-page.html?id=movie&title='.$result['movie_name'].'\'><img src="'.$result['image'].'" width="282">
+									<div class="post-info">
+										<div class="post-basic-info">
+											<h3><a href="#">'.$result['movie_name'].'</a></h3>
+											<p>'.$result['story'].'</p>
+										</div>
+										<div class="post-info-rate-share">
+											<button type="button" onclick="location.href=\'addlist.php?list=interest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) interest에 \');" class="add_interest">
+												<span></span>
+											</button>
+											<button type="button" onclick="location.href=\'addlist.php?list=wishlist&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) wishlist에 \');" class="add_wishlist">
+												<span> </span>
+											</button>
+											<button type="button" onclick="location.href=\'addlist.php?list=uninterest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) uninterest에 \');" class="add_uninterest">
+												<span> </span>
+											</button>
+											<div class="clear"> </div>
+										</div>
+									</div>
+								</a>
+								</li>';
+				}
+				mysqli_close($conn);
+				?>
 			        <!-- End of grid blocks -->
 			      </ul>
 			    </div>
@@ -168,6 +176,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		      // Capture scroll event.
 		      $window.bind('scroll.wookmark', onScroll);
 		    })(jQuery);
+		  </script>
+		  <script>
+		  	//$('.add_interest').click(function(){
+				//$('this').css('background', 'url(../images/like2.png)');
+			//});
+
+			function button_click(s){
+				alert(s+"추가되었습니다");
+			}
 		  </script>
 		<!----//wookmark-scripts---->
 		<!----start-footer--->

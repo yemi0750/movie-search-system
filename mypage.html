@@ -44,9 +44,9 @@
   <!---start-wrap---->
       <!---start-header---->
       <div class="header">
-        <div class="wrap">
-        <div class="logo">
-          <a href="login.html"><img src="logo.jpg" width="70dp" title="logo" /></a>
+        <div class="login_wrap">
+        <div class="login_logo">
+          <a href="index.html"><img src="logo.jpg" title="logo" /></a>
         </div>
         <div class="clear"> </div>
       </div>
@@ -59,11 +59,11 @@
           <div>
             <?php
           include("session.php");
-          echo "<h1>".$_SESSION['id']."님 마이페이지</h1>";
-            
+
+          echo "<h1 class=\"mypage_text\">".$_SESSION['id']."님 마이페이지</h1>";
   
           $dbname="movie_is_jojo";
-          $conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
+          $conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
           mysqli_set_charset($conn, 'utf8');
           mysqli_select_db($conn,$dbname);
             
@@ -72,7 +72,7 @@
           while($result=mysqli_fetch_array($result_set)){
               echo '<div class="content">
                   <div class="wrap">
-                    <div id="login_main" role="main">
+                    <div id="mypage_main" role="main">
                       <div id="loginForm">
                         <form method="post" action="mypage2.html">
                           <div class="id">

@@ -71,7 +71,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						<div class="mmenu">
 							<ul>
 								<li><a href="mypage.html"><span>마이페이지</span></a></li>
-								<li><a href="mylist.html"><span>마이무비</span></a></li>
+								<li><a href="mylist.php"><span>마이무비</span></a></li>
 								<li><a href="login.html"><span>로그아웃</span></a></li>
 							</ul>
 						</div>
@@ -88,7 +88,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			        <!-- These are our grid blocks -->
 			    <?php
 				$dbname="movie_is_jojo";
-				$conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
+				$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
 				mysqli_set_charset($conn, 'utf8');
 				mysqli_select_db($conn,$dbname);
 

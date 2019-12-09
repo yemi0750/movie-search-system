@@ -43,18 +43,20 @@
         <!---start-wrap---->
             <!---start-header---->
             <div class="header">
-              <div class="wrap">
-              <div class="logo">
-                <a href="login.html"><img src="logo.jpg" width="70dp" title="logo" /></a>
-              </div>
-              <div class="clear"> </div>
-            </div>
-          </div>
+        <div class="login_wrap">
+        <div class="login_logo">
+          <a href="index.html"><img src="logo.jpg" title="logo" /></a>
+        </div>
+        <div class="clear"> </div>
+      </div>
+    </div>
+    <!---//End
           <!---//End-header---->
           <!---start-content---->
           <div class="content">
             <div class="wrap">
-              <div id="main" role="main">
+              <div id="login_main" role="main">
+                <div id="login_success">
           
                 <?php
                 include("session.php");
@@ -67,25 +69,27 @@
             $gender=$_POST['gender'];   
 
             $dbname="movie_is_jojo";
-            $conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패"); //DB연결
+            $conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
             mysqli_set_charset($conn, 'utf8');
             mysqli_select_db($conn,$dbname); 
             
             $sql="UPDATE users SET user_id='$id', user_password='$pw', user_name='$name',
             gender='$gender' , nickname='$nname', email='$email' where user_id='$id'";
-            //쿼리 작성
 
-            $result=mysqli_query($conn,$sql); //쿼리 담기
+            $result=mysqli_query($conn,$sql);
             
               if(mysqli_affected_rows($conn)==1){
-                echo '<h1>update successfully</h1>';
+                echo "<h1 class=\"mypage_text\">정보가 수정되었습니다.</h1>";
+                echo "<button class=\"tohome_button\" onclick=\"location.href='index.html'\">홈으로</button>";
               }
               else{
-                echo '<h1>Error</h1>'; 
-                echo '<h1>변경 사항이 없습니다.</h1>';
+                echo "<h1 class=\"mypage_text\">변경사항이 없습니다.</h1>";
+                echo "<button class=\"tohome_button\" onclick=\"location.href='index.html'\">홈으로</button>";
+                echo "<button class=\"tohome_button2\" onclick=\"location.href='mypage.html'\">정보수정 재시도</button>";
               }
             mysqli_close($conn);   
             ?>
+          </div>
             </div>
           </div>
         </div>      

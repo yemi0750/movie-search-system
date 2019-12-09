@@ -154,7 +154,19 @@ body{
 	position:relative;
 	text-align:center
 }
-.login_id, .login_pw, .login_pwc, .login_name, .login_nm, .login_email, .login_button, .signin_button, .tohome_button, .login_birthday{
+.mypage_text{
+	width:100%;
+	font-family: 'Open Sans', sans-serif;
+	color:#363636;
+	font-size:40px;
+	position:relative;
+	padding-top:2.5em;
+	text-align:center
+}
+#mypage_main{
+	padding-top:4em;
+}
+.login_id, .login_pw, .login_pwc, .login_name, .login_nm, .login_email, .login_button, .signin_button, .tohome_button, .tohome_button2, .login_birthday{
 
 	margin-top: 1em;
 	padding: 0.58em 1em;
@@ -193,6 +205,10 @@ body{
 }
 .tohome_button{
 	margin-top:10em;
+	height:6%;
+}
+.tohome_button2{
+	margin-top:0.8em;
 	height:6%;
 }
 .artical-content{

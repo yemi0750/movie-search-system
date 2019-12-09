@@ -70,7 +70,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="mmenu">
 						<ul>
 							<li><a href="mypage.html"><span>마이페이지</span></a></li>
-							<li><a href="mylist.html"><span>마이무비</span></a></li>
+							<li><a href="mylist.php"><span>마이무비</span></a></li>
 							<li><a href="login.html"><span>로그아웃</span></a></li>
 						</ul>
 					</div>
@@ -87,7 +87,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<div class="artical-content">
 									<?php
 	$dbname="movie_is_jojo";
-	$conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
+	$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
 	mysqli_set_charset($conn, 'utf8');
 	mysqli_select_db($conn,$dbname);
 	$id=$_GET['id'];
@@ -203,7 +203,88 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			}
 			echo '</p> </div></div><div class="clear"> </div></div>';
 		}
-	}		
+	}else if($id=='user'){
+		$query = "select * from user_want where user_id='$title'";
+    	$result = mysqli_query($conn,$query);
+            
+        echo "<br><br><h1>[보고싶은 영화 목록]</h1><br>";
+		if(mysqli_num_rows($result) <1){
+        	echo "<h1>내역 없음</h1><br>";
+		}
+        while($ary = mysqli_fetch_array($result)) {
+            $query2 = "select movie_name from movies where movie_id='$ary[1]'";
+            $result2 = mysqli_query($conn, $query2);
+            $ary2 = mysqli_fetch_array($result2);
+
+            echo $ary2[0];
+            echo '<br>';
+        }
+        $query = "select * from user_good where user_id='$title'";
+            
+        $result = mysqli_query($conn,$query);
+           
+        echo "<br><br><h1>[재밌게 본 영화 목록]</h1><br>";
+		if(mysqli_num_rows($result) <1){
+        	echo "<h1>내역 없음</h1><br>";
+		}
+        while($ary = mysqli_fetch_array($result)) {
+            $query2 = "select movie_name from movies where movie_id='$ary[1]'";
+            $result2 = mysqli_query($conn, $query2);
+            $ary2 = mysqli_fetch_array($result2);
+
+            echo $ary2[0];
+            echo '<br>';
+        }
+
+        $query = "select * from user_bad where user_id='$title'";
+            
+        $result = mysqli_query($conn,$query);
+            
+        echo "<br><br><h1>[재미 없었던 영화 목록]</h1><br>";
+		if(mysqli_num_rows($result) <1){
+        	echo "<h1>내역 없음</h1><br>";
+		}
+        while($ary = mysqli_fetch_array($result)) {
+            $query2 = "select movie_name from movies where movie_id='$ary[1]'";
+            $result2 = mysqli_query($conn, $query2);
+            $ary2 = mysqli_fetch_array($result2);
+
+            echo $ary2[0];
+            echo '<br>';
+        }
+        $query = "select * from user_hate_act where user_id='$title'";
+            
+        $result = mysqli_query($conn,$query);
+           
+        echo "<br><br><h1>[hate_actor 목록]</h1><br>";
+		if(mysqli_num_rows($result) <1){
+        	echo "<h1>내역 없음</h1><br>";
+		}
+        while($ary = mysqli_fetch_array($result)) {
+            $query2 = "select actor_name from actors where actor_id='$ary[1]'";
+            $result2 = mysqli_query($conn, $query2);
+            $ary2 = mysqli_fetch_array($result2);
+
+            echo $ary2[0];
+            echo '<br>';
+        }
+        $query = "select * from user_hate_dir where user_id='$title'";
+            
+        $result = mysqli_query($conn,$query);
+            
+        echo "<br><br><h1>[hate_director 목록]</h1><br>";
+		if(mysqli_num_rows($result) <1){
+        	echo "<h1>내역 없음</h1><br>";
+		}
+        while($ary = mysqli_fetch_array($result)) {
+            $query2 = "select director_name from directors where director_id='$ary[1]'";
+            $result2 = mysqli_query($conn, $query2);
+            $ary2 = mysqli_fetch_array($result2);
+
+        	echo $ary2[0];
+            echo '<br>';
+        }
+}
 	mysqli_close($conn);
 ?>
 		  						 
@@ -212,7 +293,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<div class="grids_of_2">
 						<?php
 	$dbname="movie_is_jojo";
-	$conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
+	$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
 	mysqli_set_charset($conn, 'utf8');
 	mysqli_select_db($conn,$dbname);
 	$id=$_GET['id'];
@@ -234,7 +315,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			echo '<div class="grids_of_1"><div  class="grid_text"><h4 class="style1 list">없습니다.</h4></div><div class="clear"></div></div></div>';
 		}
 		while($result=mysqli_fetch_array($result_set)){
-			echo '<div class="grids_of_1"><div  class="grid_text"><a href=\'single-page.html?id=user&title=null\'><h4 class="style1 list">'.$result['user_id'].'</h4></a></div><div class="clear"></div></div>';
+			echo '<div class="grids_of_1"><div  class="grid_text"><a href=\'single-page.html?id=user&title='.$result['user_id'].'\'><h4 class="style1 list">'.$result['user_id'].'</h4></a></div><div class="clear"></div></div>';
 		}
 		echo '</div>';
 

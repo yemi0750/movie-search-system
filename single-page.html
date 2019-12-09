@@ -203,8 +203,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			}
 			echo '</p> </div></div><div class="clear"> </div></div>';
 		}
-		//즐겨찾기한 영화, 블락한 영화/조건 출력
-	}else if($id=="user"){
+	}///////////////////////
+	else if($id=="user"){
 		{
 			$sql="SELECT u.movie_id, u.actor_id, u.director_id FROM users AS d WHERE user_name='$title'";
 			$result_set=mysqli_query($conn,$sql);
@@ -232,6 +232,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				echo '</p> </div></div><div class="clear"> </div></div>';
 			}
 	}
+		
 	mysqli_close($conn);
 ?>
 		  						 

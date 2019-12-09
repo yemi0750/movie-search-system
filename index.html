@@ -92,10 +92,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				mysqli_set_charset($conn, 'utf8');
 				mysqli_select_db($conn,$dbname);
 
-				$sql="SELECT * FROM movies ORDER BY movie_id" AND "select movie_id from movie_is_jojo.movies 
-				//
-					
-	
+				$sql="SELECT * FROM movies where movie_id not in 
+				(select m.movie_id
+				from 
+				(select a.actor_id, a.actor_name
+				from movie_is_jojo.actors a, movie_is_jojo.user_hate_act uha
+				where a.actor_id = uha.actor_id
+				and uha.user_id = 'kang') a,
+				movie_is_jojo.movies m,
+				movie_is_jojo.appear ap
+				where a.actor_id = ap.actor_id
+				and m.movie_id = ap.movie_id) and movie_id not in 
+				(select m.movie_id
+				from 
+				(select d.director_id, d.director_name
+				from movie_is_jojo.directors d, movie_is_jojo.user_hate_dir uhd
+				where d.director_id = uhd.director_id
+				and uhd.user_id = 'han') d,
+				movie_is_jojo.movies m,
+				movie_is_jojo.make make
+				where d.director_id = make.director_id
+				and m.movie_id = make.movie_id)";
+				
+				
 
 				$result_set=mysqli_query($conn,$sql);
 				while($result=mysqli_fetch_array($result_set)){

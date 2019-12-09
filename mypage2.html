@@ -55,8 +55,9 @@
           <div class="content">
             <div class="wrap">
               <div id="main" role="main">
-          <div>
+          
                 <?php
+            
             $id=$_POST['id'];
             $pw=$_POST['pw'];
             $name=$_POST['name'];
@@ -71,26 +72,25 @@
             mysqli_select_db($conn,$dbname); 
 
             $sql="UPDATE users SET user_id='".$id."', user_password='".$pw."', user_name='".$name."', 
-            data_of_birth='".$birthday."', gender='".$gender."', nickname='".$name."', email='".$email."';
-            if(mysqli_query($conn, $sql)){
-              echo '<h1>update successfully</h1>';
+            data_of_birth='".$birthday."', gender='".$gender."', nickname='".$name."', email='".$email."'";
+            if($result->num_rows==0){
+              echo '<h1 class=\"login_success_text\">update successfully</h1>';
+              echo "<button class=\"tohome_button\" onclick=\"location.href='index.html'\">홈으로</button>";
             }
             else{
               echo '<h1>Error</h1>'; 
             }
             mysqli_close($conn);   
-          ?>
-                </div>
-              </div>
+            ?>
+            
             </div>
           </div>
-                
+        </div>      
            <!---//End-content---->
             <!----start-footer--->
             <div class='footer'>
                 <p>DB Project : 영화는 조조</a></p>
             </div>
             <!----//End-footer--->
-            </body>
-        </html>
-    
+  </body>
+</html>         

@@ -94,7 +94,11 @@
 			$sql="(SELECT \"movie\" AS id, movie_id AS adid, movie_name AS title, image AS img, story AS content FROM movies WHERE movie_name LIKE '%".$text."%') UNION (SELECT \"actor\" AS id, actor_id AS adid, actor_name AS title, image_link AS img, agency AS content FROM actors WHERE actor_name LIKE '%".$text."%') UNION (SELECT \"director\" AS id, director_id AS adid, director_name AS title, image AS img, debut AS content FROM directors WHERE director_name LIKE '%".$text."%')";
 			break;
 		case 'movie':
-			$sql="SELECT \"movie\" AS id, movie_id AS adid, movie_name AS title, image AS img, story AS content FROM movies WHERE movie_name LIKE '%".$text."%'";
+			$sql="SELECT \"movie\" AS id, movie_id AS adid, movie_name AS title, image AS img, story AS content FROM movies WHERE movie_name LIKE '%".$text."%'
+			and movie_id not in (select m.movie_id from (select a.actor_id, a.actor_name from movie_is_jojo.actors a, movie_is_jojo.user_hate_act uha
+			where a.actor_id = uha.actor_id and uha.user_id = 'kang') a, movie_is_jojo.movies m, movie_is_jojo.appear ap where a.actor_id = ap.actor_id and m.movie_id = ap.movie_id)
+			and movie_id not in (select m.movie_id from (select d.director_id, d.director_name from movie_is_jojo.directors d, movie_is_jojo.user_hate_dir uhd where d.director_id = uhd.director_id
+			and uhd.user_id = 'han') d, movie_is_jojo.movies m, movie_is_jojo.make make where d.director_id = make.director_id and m.movie_id = make.movie_id)";
 			break;
 		case 'actor':
 			$sql="SELECT \"actor\" AS id, actor_id AS adid, actor_name AS title, image_link AS img, agency AS content FROM actors WHERE actor_name LIKE '%".$text."%'";

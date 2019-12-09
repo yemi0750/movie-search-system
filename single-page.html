@@ -203,36 +203,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			}
 			echo '</p> </div></div><div class="clear"> </div></div>';
 		}
-	}///////////////////////
-	else if($id=="user"){
-		{
-			$sql="SELECT u.movie_id, u.actor_id, u.director_id FROM users AS d WHERE user_name='$title'";
-			$result_set=mysqli_query($conn,$sql);
-			while($result=mysqli_fetch_array($result_set)){
-				echo '<div class="spost-info-rate-share">
-									<button type="button" onclick="location.href=\'addlist.php?list=banlist_user&id='.$result['user_id'].'\'; button_click(\''.$result['user_name'].'이(가) uninterest에 \');" class="sadd_uninterest">
-										<span> </span>
-									</button>
-									<div class="clear"> </div>
-								</div>
-								<div class="single_poster"><img src="'.$result['image'].'" title="banner1"></div><div  class="single_content">
-										<h2 class="sp_title">'.$result['user_name'].'</h2>
-										<p class="sp_detail">';
-										
-				if($result['movie_id']){
-					echo '즐겨찾기한 영화'$result['movie_id'].'<br>';
-				}
-				if($result['actor_id']){
-					echo '보기 싫은 배우'.$result['actor_id'].'<br>';
-				}
-				if($result['director_id']){
-					echo '보기 싫은 영화감독 '.$result['director_id'].'<br>';
-				}
-				
-				echo '</p> </div></div><div class="clear"> </div></div>';
-			}
-	}
-		
+	}		
 	mysqli_close($conn);
 ?>
 		  						 

@@ -58,17 +58,83 @@
         <div id="main" role="main">
           <div></div>
             <?php
-            echo "<h1>".$_SESSION['id']."님 관심목록</h1>";
+            include("session.php");
+            $id=$_SESSION['id'];
+            
+            echo "<h1>".$_SESSION['id']."님</h1>";
             
             $dbname="movie_is_jojo";
             $conn=mysqli_connect("localhost:3306","root","5212245",$dbname) or die("mysql 접속 실패");
             mysqli_set_charset($conn, 'utf8');
             mysqli_select_db($conn,$dbname);
 
+            $query = "select * from uesr_interest where user_id='$id'";
             
-            echo "select * from user_interest";
-            echo "select * from user_hate_act";
-            echo "select * from user_hate_dir";
+            $result = mysqli_query($conn,$query);
+            
+            echo "<h1> interest 목록</h1><br>";
+            while($ary = mysqli_fetch_array($result)) {
+              $query2 = "select movie_name from movies where movie_id='$ary[1]'";
+              $result2 = mysqli_query($conn, $query2);
+              $ary2 = mysqli_fetch_array($result2);
+
+              echo $ary2[0];
+              echo '<br>';
+            }
+            $query = "select * from user_good where user_id='$id'";
+            
+            $result = mysqli_query($conn,$query);
+            
+            echo "<h1> good 목록</h1><br>";
+            while($ary = mysqli_fetch_array($result)) {
+              $query2 = "select movie_name from movies where movie_id='$ary[1]'";
+              $result2 = mysqli_query($conn, $query2);
+              $ary2 = mysqli_fetch_array($result2);
+
+              echo $ary2[0];
+              echo '<br>';
+            }
+
+            $query = "select * from uesr_want where user_id='$id'";
+            
+            $result = mysqli_query($conn,$query);
+            
+            echo "<h1> want 목록</h1><br>";
+            while($ary = mysqli_fetch_array($result)) {
+              $query2 = "select movie_name from movies where movie_id='$ary[1]'";
+              $result2 = mysqli_query($conn, $query2);
+              $ary2 = mysqli_fetch_array($result2);
+
+              echo $ary2[0];
+              echo '<br>';
+            }
+            $query = "select * from user_hate_act where user_id='$id'";
+            
+            $result = mysqli_query($conn,$query);
+            
+            echo "<h1> hate_actor 목록</h1><br>";
+            while($ary = mysqli_fetch_array($result)) {
+              $query2 = "select movie_name from movies where movie_id='$ary[1]'";
+              $result2 = mysqli_query($conn, $query2);
+              $ary2 = mysqli_fetch_array($result2);
+
+              echo $ary2[0];
+              echo '<br>';
+            }
+            $query = "select * from user_hate_dir where user_id='$id'";
+            
+            $result = mysqli_query($conn,$query);
+            
+            echo "<h1> hate_director 목록</h1><br>";
+            while($ary = mysqli_fetch_array($result)) {
+              $query2 = "select movie_name from movies where movie_id='$ary[1]'";
+              $result2 = mysqli_query($conn, $query2);
+              $ary2 = mysqli_fetch_array($result2);
+
+              
+              echo $ary2[0];
+              echo '<br>';
+            }
 
 
     mysqli_close($conn);

@@ -6,6 +6,8 @@
 	mysqli_select_db($conn,$dbname);
 	$list=$_GET['list'];
 	$id=$_GET['id'];
+	$page=$_GET['page'];
+	$title=$_GET['title'];
 	$sql2="";
 	$tablename="";
 	$var="";
@@ -42,5 +44,21 @@
 	}
 	$result_set=mysqli_query($conn,$sql2);
 	mysqli_close($conn);
-	Header("Location:/DB_web/DB/index.html");
+	switch($page){
+		case 'index':
+			Header("Location:/DB_web/DB/index.html");
+			break;
+		case 'mylist':
+			Header("Location:/DB_web/DB/mylist.php");
+			break;
+		case 'movie':
+			Header("Location:/DB_web/DB/single-page.html?id=movie&title=".$title);
+			break;
+		case 'actor':
+			Header("Location:/DB_web/DB/single-page.html?id=actor&title=".$title);
+			break;
+		case 'director':
+			Header("Location:/DB_web/DB/single-page.html?id=director&title=".$title);
+			break;
+	}
 ?>

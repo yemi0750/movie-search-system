@@ -187,6 +187,28 @@ body{
 	position:relative;
 	width:100%;
 }
+.mylist_title{
+	padding-top:2em;
+	padding-bottom:2em;
+	display:block ;
+	font-family: 'Open Sans', sans-serif;
+	font-size:40px;
+}
+.mylist_title_content{
+	margin-right:0em !important;
+	float:left;
+}
+.lili{
+	width:100% !important;
+	background-color: #F0EFEE !important;
+	border: 0px solid #dedede !important;
+	clear:both;
+}
+.mylist_content{
+	font-family: 'Open Sans', sans-serif;
+	font-size:20px;
+	color:#777;
+}
  .login_birthday,.login_gender{
  	margin-top: 4 !important;
  }

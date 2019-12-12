@@ -87,33 +87,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			      <ul id="tiles">
 			        <!-- These are our grid blocks -->
 			    <?php
+				include("session.php");
 				$dbname="movie_is_jojo";
 				$conn=mysqli_connect("localhost","root","1234",$dbname) or die("mysql 접속 실패");
 				mysqli_set_charset($conn, 'utf8');
 				mysqli_select_db($conn,$dbname);
 
-				$sql="SELECT * FROM movies where movie_id not in 
-				(select m.movie_id
-				from 
-				(select a.actor_id, a.actor_name
-				from movie_is_jojo.actors a, movie_is_jojo.user_hate_act uha
-				where a.actor_id = uha.actor_id
-				and uha.user_id = 'kang') a,
-				movie_is_jojo.movies m,
-				movie_is_jojo.appear ap
-				where a.actor_id = ap.actor_id
-				and m.movie_id = ap.movie_id) and movie_id not in 
-				(select m.movie_id
-				from 
-				(select d.director_id, d.director_name
-				from movie_is_jojo.directors d, movie_is_jojo.user_hate_dir uhd
-				where d.director_id = uhd.director_id
-				and uhd.user_id = 'han') d,
-				movie_is_jojo.movies m,
-				movie_is_jojo.make make
-				where d.director_id = make.director_id
-				and m.movie_id = make.movie_id)";
-				
+				$sql="SELECT 'movie' AS id, movie_id, movie_name, image, story FROM movies WHERE movie_id not in(select m.movie_id from ((select actor_id from user_hate_act where user_id = '".$_SESSION['id']."') AS a JOIN (movies AS m JOIN appear AS ap ON m.movie_id = ap.movie_id) ON a.actor_id = ap.actor_id)) AND movie_id not in(select m.movie_id from ((select director_id from user_hate_dir where user_id = '".$_SESSION['id']."') AS a JOIN (movies AS m JOIN make AS mk ON m.movie_id = mk.movie_id) ON a.director_id = mk.director_id)) ORDER BY release_date DESC";
 				
 
 				$result_set=mysqli_query($conn,$sql);
@@ -125,13 +105,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 											<p>'.$result['story'].'</p>
 										</div>
 										<div class="post-info-rate-share">
-											<button type="button" onclick="location.href=\'addlist.php?list=interest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) interest에 \');" class="add_interest">
+											<button type="button" onclick="location.href=\'addlist.php?page=index&title=1&list=interest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) interest에 \');" class="add_interest">
 												<span></span>
 											</button>
-											<button type="button" onclick="location.href=\'addlist.php?list=wishlist&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) wishlist에 \');" class="add_wishlist">
+											<button type="button" onclick="location.href=\'addlist.php?page=index&title=1&list=wishlist&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) wishlist에 \');" class="add_wishlist">
 												<span> </span>
 											</button>
-											<button type="button" onclick="location.href=\'addlist.php?list=uninterest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) uninterest에 \');" class="add_uninterest">
+											<button type="button" onclick="location.href=\'addlist.php?page=index&title=1&list=uninterest&id='.$result['movie_id'].'\'; button_click(\''.$result['movie_name'].'이(가) uninterest에 \');" class="add_uninterest">
 												<span> </span>
 											</button>
 											<div class="clear"> </div>
@@ -202,7 +182,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			//});
 
 			function button_click(s){
-				alert(s+"추가되었습니다");
 			}
 		  </script>
 		<!----//wookmark-scripts---->
